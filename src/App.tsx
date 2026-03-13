@@ -104,30 +104,40 @@ function App() {
   return (
     <div className="App">
       <main>
-          <div id="controls" style={{ padding: "10px", zIndex: 1000, position: "relative" }}>
-            <label>My Language: </label>
-            <select onChange={(e) => setUserLanguage(e.target.value)}>
-              <option value="English">English</option>
-              <option value="Spanish">Spanish</option>
-              <option value="Chinese">Chinese</option>
-              <option value="Hindi">Hindi</option>
-              <option value="French">French</option>
-            </select>
+        <div
+          id="controls"
+          style={{
+            position: "fixed",   
+            top: 20,
+            left: 20,
+            zIndex: 20000,        
+            backgroundColor: "white",
+            padding: "10px",
+            borderRadius: "6px",
+            boxShadow: "0 0 10px rgba(0,0,0,0.3)"
+          }}
+>
+          <label>My Language: </label>
+          <select onChange={(e) => setUserLanguage(e.target.value)}>
+            <option value="English">English</option>
+            <option value="Spanish">Spanish</option>
+            <option value="Chinese">Chinese</option>
+            <option value="Hindi">Hindi</option>
+            <option value="French">French</option>
+          </select>
 
-            <label style={{ marginLeft: "15px" }}>Translate To: </label>
-            <select onChange={(e) => setTranslateLanguage(e.target.value)}>
-              <option value="Spanish">Spanish</option>
-              <option value="English">English</option>
-              <option value="Chinese">Chinese</option>
-              <option value="Hindi">Hindi</option>
-              <option value="French">French</option>
-            </select>
-          </div>
-
-          <div id="join-flow">
+          <label style={{ marginLeft: "15px" }}>Translate To: </label>
+          <select onChange={(e) => setTranslateLanguage(e.target.value)}>
+            <option value="Spanish">Spanish</option>
+            <option value="English">English</option>
+            <option value="Chinese">Chinese</option>
+            <option value="Hindi">Hindi</option>
+            <option value="French">French</option>
+          </select>
+        </div>
+        <div id="join-flow">
           <h1>Zoom Video SDK Sample React</h1>
           <p>User interface offered by the Video SDK UI Toolkit</p>
-
           <div id="meeting-button">
           <button onClick={()=>getVideoSDKJWT(1, "Host")}>Start New Meeting</button>
           <button onClick={()=>getVideoSDKJWT(0, "Guest")}>Join Existing Session</button>
