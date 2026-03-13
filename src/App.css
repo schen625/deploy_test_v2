@@ -42,3 +42,14 @@ main #join-flow button:hover {
   gap: 15px;
   justify-content: center;
 }
+
+#join-flow select {
+  display: inline-block;  
+  width: 150px;           
+  margin-right: 10px;     
+  z-index: 10;           
+  background-color: white;
+  color: black;           
+  padding: 4px;
+  border-radius: 4px;
+}
