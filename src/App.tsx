@@ -104,13 +104,8 @@ function App() {
   return (
     <div className="App">
       <main>
-        <div id="join-flow">
-          <h1>Zoom Video SDK Sample React</h1>
-          <p>User interface offered by the Video SDK UI Toolkit</p>
-
-          <div style={{ marginBottom: "20px", position: "relative", zIndex: 20 }}>
-          <label>My Language: </label>
-
+          <div id="controls" style={{ padding: "10px", zIndex: 1000, position: "relative" }}>
+            <label>My Language: </label>
             <select onChange={(e) => setUserLanguage(e.target.value)}>
               <option value="English">English</option>
               <option value="Spanish">Spanish</option>
@@ -119,8 +114,7 @@ function App() {
               <option value="French">French</option>
             </select>
 
-            <label  style={{ marginLeft: "15px" }}>Translate To: </label>
-
+            <label style={{ marginLeft: "15px" }}>Translate To: </label>
             <select onChange={(e) => setTranslateLanguage(e.target.value)}>
               <option value="Spanish">Spanish</option>
               <option value="English">English</option>
@@ -129,6 +123,10 @@ function App() {
               <option value="French">French</option>
             </select>
           </div>
+
+          <div id="join-flow">
+          <h1>Zoom Video SDK Sample React</h1>
+          <p>User interface offered by the Video SDK UI Toolkit</p>
 
           <div id="meeting-button">
           <button onClick={()=>getVideoSDKJWT(1, "Host")}>Start New Meeting</button>
