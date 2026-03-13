@@ -108,7 +108,7 @@ function App() {
           <h1>Zoom Video SDK Sample React</h1>
           <p>User interface offered by the Video SDK UI Toolkit</p>
 
-          <div style={{ marginBottom: "20px" }}>
+          <div style={{ marginBottom: "20px", position: "relative", zIndex: 20 }}>
           <label>My Language: </label>
 
             <select onChange={(e) => setUserLanguage(e.target.value)}>
@@ -119,7 +119,7 @@ function App() {
               <option value="French">French</option>
             </select>
 
-            <label style={{ marginLeft: "15px" }}>Translate To: </label>
+            <label  style={{ marginLeft: "15px" }}>Translate To: </label>
 
             <select onChange={(e) => setTranslateLanguage(e.target.value)}>
               <option value="Spanish">Spanish</option>
