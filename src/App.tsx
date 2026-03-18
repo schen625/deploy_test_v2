@@ -102,7 +102,7 @@ function App() {
   };
 
   return (
- 
+    <div className="App">
       <main>
         <div id="join-flow">
           <h1>Zoom Video SDK Sample React</h1>
@@ -123,29 +123,13 @@ function App() {
           width: "100%",
           top: "auto",
           bottom: "0",
-          left: "0"
+        left: "0"
         }}>
-           <label>My Language: </label>
-          <select onChange={(e) => setUserLanguage(e.target.value)}>
-            <option value="English">English</option>
-            <option value="Spanish">Spanish</option>
-            <option value="Chinese">Chinese</option>
-            <option value="Hindi">Hindi</option>
-            <option value="French">French</option>
-          </select>
-
-          <label style={{ marginLeft: "15px" }}>Translate To: </label>
-          <select onChange={(e) => setTranslateLanguage(e.target.value)}>
-            <option value="Spanish">Spanish</option>
-            <option value="English">English</option>
-            <option value="Chinese">Chinese</option>
-            <option value="Hindi">Hindi</option>
-            <option value="French">French</option>
-          </select>
+           {userLanguage}
         </div>
 
       </main>
-
+    </div>
   );
 }
 
