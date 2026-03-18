@@ -104,20 +104,22 @@ function App() {
   return (
     <div className="App">
       <main>
-        <div
-          id="controls"
-          style={{
-            position: "fixed",   
-            top: 20,
-            left: 20,
-            zIndex: 20000,        
-            backgroundColor: "white",
-            padding: "10px",
-            borderRadius: "6px",
-            boxShadow: "0 0 10px rgba(0,0,0,0.3)"
-          }}
->
-          <label>My Language: </label>
+        <div id="join-flow">
+          <h1>Zoom Video SDK Sample React</h1>
+          <p>User interface offered by the Video SDK UI Toolkit</p>
+           <div id="meeting-button">
+          <button onClick={()=>getVideoSDKJWT(1, "Host")}>Start New Meeting</button>
+          <button onClick={()=>getVideoSDKJWT(0, "Guest")}>Join Existing Session</button>
+          </div>
+        </div>
+        <div id="sessionContainer"></div>
+        <div style={{
+          background: "black",
+          color: "white",
+          padding: "10px",
+          marginTop: "10px"
+        }}>
+           <label>My Language: </label>
           <select onChange={(e) => setUserLanguage(e.target.value)}>
             <option value="English">English</option>
             <option value="Spanish">Spanish</option>
@@ -135,16 +137,7 @@ function App() {
             <option value="French">French</option>
           </select>
         </div>
-        <div id="join-flow">
-          <h1>Zoom Video SDK Sample React</h1>
-          <p>User interface offered by the Video SDK UI Toolkit</p>
-          <div id="meeting-button">
-          <button onClick={()=>getVideoSDKJWT(1, "Host")}>Start New Meeting</button>
-          <button onClick={()=>getVideoSDKJWT(0, "Guest")}>Join Existing Session</button>
-          </div>
-          
-        </div>
-        <div id="sessionContainer"></div>
+
       </main>
     </div>
   );
