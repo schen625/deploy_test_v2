@@ -114,10 +114,13 @@ function App() {
         </div>
         <div id="sessionContainer"></div>
         <div style={{
+          position: "fixed",
           background: "black",
           color: "white",
           padding: "10px",
-          marginTop: "10px"
+          marginTop: "10px",
+          zIndex: 9999,
+          width: "100%"
         }}>
            <label>My Language: </label>
           <select onChange={(e) => setUserLanguage(e.target.value)}>
