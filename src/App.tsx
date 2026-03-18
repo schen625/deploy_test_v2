@@ -102,7 +102,7 @@ function App() {
   };
 
   return (
-    <div className="App">
+ 
       <main>
         <div id="join-flow">
           <h1>Zoom Video SDK Sample React</h1>
@@ -145,7 +145,7 @@ function App() {
         </div>
 
       </main>
-    </div>
+
   );
 }
 
