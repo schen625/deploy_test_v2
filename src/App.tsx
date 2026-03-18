@@ -119,8 +119,11 @@ function App() {
           color: "white",
           padding: "10px",
           marginTop: "10px",
-          zIndex: 9999,
-          width: "100%"
+          zIndex: 999999,
+          width: "100%",
+          top: "auto",
+          bottom: "0",
+          left: "0"
         }}>
            <label>My Language: </label>
           <select onChange={(e) => setUserLanguage(e.target.value)}>
