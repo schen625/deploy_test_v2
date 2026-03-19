@@ -113,6 +113,7 @@ function App() {
           </div>
         </div>
         <div id="sessionContainer"></div>
+        </main>
         <div style={{
           position: "fixed",
           background: "black",
@@ -143,7 +144,7 @@ function App() {
             <option value="French">French</option>
           </select>
         </div>
-      </main>
+     
     </div>
   );
 }
