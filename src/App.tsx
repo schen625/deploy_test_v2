@@ -2,36 +2,32 @@ import uitoolkit, { CustomizationOptions } from "@zoom/videosdk-ui-toolkit";
 import "@zoom/videosdk-ui-toolkit/dist/videosdk-ui-toolkit.css";
 
 import "./App.css";
-import {useState, useEffect} from "react"
+import { useState, useEffect } from "react";
 import { translateInput } from "./translate_gemini";
 import { createPortal } from "react-dom";
 
 function App() {
   let sessionContainer: HTMLDivElement | null = null;
 
-  const [userLanguage, setUserLanguage] = useState("English")
-  const [translateLanguage, setTranslateLanguage] = useState("Spanish")
-  
+  const [userLanguage, setUserLanguage] = useState("English");
+  const [translateLanguage, setTranslateLanguage] = useState("Spanish");
+
+  // Portal target
   const [overlayRoot, setOverlayRoot] = useState<HTMLElement | null>(null);
 
   useEffect(() => {
-  const root = document.getElementById("overlay-root");
-  console.log("overlay-root:", root);
-  setOverlayRoot(root);
-}, []);
+    // Set body as overlay root after mount
+    setOverlayRoot(document.body);
+  }, []);
 
-  // set your auth endpoint here
-  // a sample is available here: https://github.com/zoom/videosdk-auth-endpoint-sample
-  const authEndpoint = "https://deploy-test-backend-3f10.onrender.com"; // http://localhost:4000
+  const authEndpoint = "https://deploy-test-backend-3f10.onrender.com";
   const config: CustomizationOptions = {
     videoSDKJWT: "",
     sessionName: "test",
     userName: "Host",
     sessionPasscode: "123",
     featuresOptions: {
-      preview: {
-        enable: true,
-      },
+      preview: { enable: true },
       virtualBackground: {
         enable: true,
         virtualBackgrounds: [
@@ -43,11 +39,10 @@ function App() {
     },
   };
 
-  function getVideoSDKJWT(role:number, userName:string) {
-    sessionContainer = document.getElementById(
-      "sessionContainer"
-    ) as HTMLDivElement;
+  function getVideoSDKJWT(role: number, userName: string) {
+    sessionContainer = document.getElementById("sessionContainer") as HTMLDivElement;
     document.getElementById("join-flow")!.style.display = "none";
+
     fetch(authEndpoint, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -58,12 +53,9 @@ function App() {
         videoWebRtcMode: 1,
       }),
     })
-      .then((response) => {
-        return response.json();
-      })
+      .then((res) => res.json())
       .then((data) => {
         if (data.signature) {
-          console.log(data.signature);
           config.videoSDKJWT = data.signature;
           config.userName = userName;
           joinSession();
@@ -71,33 +63,26 @@ function App() {
           console.log(data);
         }
       })
-      .catch((error) => {
-        console.log(error);
-      });
+      .catch(console.log);
   }
 
   function joinSession() {
-    console.log(config);
-    if (sessionContainer) {
-      uitoolkit.joinSession(sessionContainer, config); 
+    if (!sessionContainer) return;
 
-      const client = uitoolkit.getClient();
-      client.on("chat-on-message", async (payload:any) => {
+    uitoolkit.joinSession(sessionContainer, config);
+    const client = uitoolkit.getClient();
+
+    client.on("chat-on-message", async (payload: any) => {
       const message = payload.message;
-
       if (message.includes("[translated]")) return;
-          const translated = await translateInput(
-            message,
-            userLanguage,
-            translateLanguage
-          );
-          const finalMessage = `${message}\n[translated] ${translated}`;
-          client.getChatClient().send(finalMessage);
 
-      });
-      sessionContainer && uitoolkit.onSessionClosed(sessionClosed);
-      uitoolkit.onSessionDestroyed(sessionDestroyed);
-    }
+      const translated = await translateInput(message, userLanguage, translateLanguage);
+      const finalMessage = `${message}\n[translated] ${translated}`;
+      client.getChatClient().send(finalMessage);
+    });
+
+    uitoolkit.onSessionClosed(sessionClosed);
+    uitoolkit.onSessionDestroyed(sessionDestroyed);
   }
 
   const sessionClosed = () => {
@@ -110,61 +95,65 @@ function App() {
     uitoolkit.destroy();
   };
 
-const controlsUI = (
-  <div className="controls-overlay">
-    <label>My Language: </label>
-    <select onChange={(e) => setUserLanguage(e.target.value)}>
-      <option value="English">English</option>
-      <option value="Spanish">Spanish</option>
-      <option value="Chinese">Chinese</option>
-      <option value="Hindi">Hindi</option>
-      <option value="French">French</option>
-    </select>
+  // Controls UI as a portal
+  const controlsUI = overlayRoot && createPortal(
+    <div className="controls-overlay">
+      <label>My Language: </label>
+      <select value={userLanguage} onChange={(e) => setUserLanguage(e.target.value)}>
+        <option value="English">English</option>
+        <option value="Spanish">Spanish</option>
+        <option value="Chinese">Chinese</option>
+        <option value="Hindi">Hindi</option>
+        <option value="French">French</option>
+      </select>
 
-    <label style={{ marginLeft: "15px" }}>Translate To: </label>
-    <select onChange={(e) => setTranslateLanguage(e.target.value)}>
-      <option value="Spanish">Spanish</option>
-      <option value="English">English</option>
-      <option value="Chinese">Chinese</option>
-      <option value="Hindi">Hindi</option>
-      <option value="French">French</option>
-    </select>
-  </div>
-);
+      <label style={{ marginLeft: "15px" }}>Translate To: </label>
+      <select value={translateLanguage} onChange={(e) => setTranslateLanguage(e.target.value)}>
+        <option value="Spanish">Spanish</option>
+        <option value="English">English</option>
+        <option value="Chinese">Chinese</option>
+        <option value="Hindi">Hindi</option>
+        <option value="French">French</option>
+      </select>
+    </div>,
+    overlayRoot
+  );
+
+  // Test overlay as a portal
+  const testOverlay = overlayRoot && createPortal(
+    <h1
+      style={{
+        position: "fixed",
+        top: "20px",
+        left: "20px",
+        zIndex: 2147483647,
+        color: "red",
+      }}
+    >
+      TEST OVERLAY
+    </h1>,
+    overlayRoot
+  );
 
   return (
-    <div>
     <div className="App">
       <main>
         <div id="join-flow">
           <h1>Zoom Video SDK Sample React</h1>
           <p>User interface offered by the Video SDK UI Toolkit</p>
-           <div id="meeting-button">
-          <button onClick={()=>getVideoSDKJWT(1, "Host")}>Start New Meeting</button>
-          <button onClick={()=>getVideoSDKJWT(0, "Guest")}>Join Existing Session</button>
+          <div id="meeting-button">
+            <button onClick={() => getVideoSDKJWT(1, "Host")}>Start New Meeting</button>
+            <button onClick={() => getVideoSDKJWT(0, "Guest")}>Join Existing Session</button>
           </div>
         </div>
         <div id="sessionContainer"></div>
-        </main>
-        </div>
-        {overlayRoot &&
-            createPortal(
-            <h1
-              style={{
-                position: "fixed",
-                top: "20px",
-                left: "20px",
-                zIndex: 2147483647,
-                color: "red",
-              }}
-            >
-              TEST OVERLAY
-            </h1>,
-            overlayRoot
-          )}
-        </div>
+      </main>
+
+      {/* Portals */}
+      {controlsUI}
+      {testOverlay}
+    </div>
   );
 }
 
 export default App;
-
