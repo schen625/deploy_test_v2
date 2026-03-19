@@ -131,6 +131,7 @@ const controlsUI = (
 );
 
   return (
+    <div>
     <div className="App">
       <main>
         <div id="join-flow">
@@ -143,7 +144,22 @@ const controlsUI = (
         </div>
         <div id="sessionContainer"></div>
         </main>
-        {overlayRoot && createPortal(controlsUI, overlayRoot)}
+        </div>
+        {overlayRoot &&
+      createPortal(
+        <h1
+          style={{
+            position: "fixed",
+            top: "20px",
+            left: "20px",
+            zIndex: 2147483647,
+            color: "red",
+          }}
+        >
+          TEST OVERLAY
+        </h1>,
+        overlayRoot
+      )}
         </div>
   );
 }
