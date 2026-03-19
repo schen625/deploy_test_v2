@@ -142,8 +142,8 @@ const controlsUI = (
           </div>
         </div>
         <div id="sessionContainer"></div>
-          {overlayRoot && createPortal(controlsUI, overlayRoot)}
         </main>
+        {overlayRoot && createPortal(controlsUI, overlayRoot)}
         </div>
   );
 }
