@@ -53,17 +53,15 @@ main #join-flow button:hover {
   padding: 4px;               
   border-radius: 4px;         
 }
-
 .controls-overlay {
-  position: fixed !important;
-  bottom: 0 !important;
-  left: 0 !important;
-  width: 100% !important;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
 
-  background: rgba(0,0,0,0.95);
+  background: rgba(0, 0, 0, 0.9);
   color: white;
   padding: 10px;
 
-  z-index: 2147483647 !important; /* MAX INT */
-  pointer-events: auto !important;
+  z-index: 2147483647; 
 }
