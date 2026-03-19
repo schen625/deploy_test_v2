@@ -2,7 +2,7 @@ import uitoolkit, { CustomizationOptions } from "@zoom/videosdk-ui-toolkit";
 import "@zoom/videosdk-ui-toolkit/dist/videosdk-ui-toolkit.css";
 
 import "./App.css";
-import {useState} from "react"
+import {useState, useEffect} from "react"
 import { translateInput } from "./translate_gemini";
 import { createPortal } from "react-dom";
 
@@ -11,7 +11,13 @@ function App() {
 
   const [userLanguage, setUserLanguage] = useState("English")
   const [translateLanguage, setTranslateLanguage] = useState("Spanish")
+  
+  const [overlayRoot, setOverlayRoot] = useState<HTMLElement | null>(null);
 
+  useEffect(() => {
+    const root = document.getElementById("overlay-root");
+    setOverlayRoot(root);
+  }, []);
   // set your auth endpoint here
   // a sample is available here: https://github.com/zoom/videosdk-auth-endpoint-sample
   const authEndpoint = "https://deploy-test-backend-3f10.onrender.com"; // http://localhost:4000
@@ -102,8 +108,6 @@ function App() {
     uitoolkit.destroy();
   };
 
-  const overlayRoot = document.getElementById("overlay-root");
-
 const controlsUI = (
   <div className="controls-overlay">
     <label>My Language: </label>
@@ -138,8 +142,8 @@ const controlsUI = (
           </div>
         </div>
         <div id="sessionContainer"></div>
-        </main>
           {overlayRoot && createPortal(controlsUI, overlayRoot)}
+        </main>
         </div>
   );
 }
