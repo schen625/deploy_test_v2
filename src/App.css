@@ -53,3 +53,16 @@ main #join-flow button:hover {
   padding: 4px;               
   border-radius: 4px;         
 }
+
+.controls-overlay {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+
+  background: rgba(0, 0, 0, 0.9);
+  color: white;
+  padding: 10px;
+
+  z-index: 2147483647; /* MAX */
+}

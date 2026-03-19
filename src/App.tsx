@@ -4,6 +4,7 @@ import "@zoom/videosdk-ui-toolkit/dist/videosdk-ui-toolkit.css";
 import "./App.css";
 import {useState} from "react"
 import { translateInput } from "./translate_gemini";
+import { createPortal } from "react-dom";
 
 function App() {
   let sessionContainer: HTMLDivElement | null = null;
@@ -101,6 +102,30 @@ function App() {
     uitoolkit.destroy();
   };
 
+  const overlayRoot = document.getElementById("overlay-root");
+
+const controlsUI = (
+  <div className="controls-overlay">
+    <label>My Language: </label>
+    <select onChange={(e) => setUserLanguage(e.target.value)}>
+      <option value="English">English</option>
+      <option value="Spanish">Spanish</option>
+      <option value="Chinese">Chinese</option>
+      <option value="Hindi">Hindi</option>
+      <option value="French">French</option>
+    </select>
+
+    <label style={{ marginLeft: "15px" }}>Translate To: </label>
+    <select onChange={(e) => setTranslateLanguage(e.target.value)}>
+      <option value="Spanish">Spanish</option>
+      <option value="English">English</option>
+      <option value="Chinese">Chinese</option>
+      <option value="Hindi">Hindi</option>
+      <option value="French">French</option>
+    </select>
+  </div>
+);
+
   return (
     <div className="App">
       <main>
@@ -114,38 +139,8 @@ function App() {
         </div>
         <div id="sessionContainer"></div>
         </main>
-        <div style={{
-          position: "fixed",
-          background: "black",
-          color: "white",
-          padding: "10px",
-          marginTop: "10px",
-          zIndex: 9999,
-          width: "100%",
-          top: "auto",
-          bottom: "0",
-          left: "0"
-        }}>
-           <label>My Language: </label>
-          <select onChange={(e) => setUserLanguage(e.target.value)}>
-            <option value="English">English</option>
-            <option value="Spanish">Spanish</option>
-            <option value="Chinese">Chinese</option>
-            <option value="Hindi">Hindi</option>
-            <option value="French">French</option>
-          </select>
-
-          <label style={{ marginLeft: "15px" }}>Translate To: </label>
-          <select onChange={(e) => setTranslateLanguage(e.target.value)}>
-            <option value="Spanish">Spanish</option>
-            <option value="English">English</option>
-            <option value="Chinese">Chinese</option>
-            <option value="Hindi">Hindi</option>
-            <option value="French">French</option>
-          </select>
+          {overlayRoot && createPortal(controlsUI, overlayRoot)}
         </div>
-     
-    </div>
   );
 }
 
