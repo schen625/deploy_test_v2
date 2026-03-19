@@ -15,9 +15,11 @@ function App() {
   const [overlayRoot, setOverlayRoot] = useState<HTMLElement | null>(null);
 
   useEffect(() => {
-    const root = document.getElementById("overlay-root");
-    setOverlayRoot(root);
-  }, []);
+  const root = document.getElementById("overlay-root");
+  console.log("overlay-root:", root);
+  setOverlayRoot(root);
+}, []);
+
   // set your auth endpoint here
   // a sample is available here: https://github.com/zoom/videosdk-auth-endpoint-sample
   const authEndpoint = "https://deploy-test-backend-3f10.onrender.com"; // http://localhost:4000
@@ -146,20 +148,20 @@ const controlsUI = (
         </main>
         </div>
         {overlayRoot &&
-      createPortal(
-        <h1
-          style={{
-            position: "fixed",
-            top: "20px",
-            left: "20px",
-            zIndex: 2147483647,
-            color: "red",
-          }}
-        >
-          TEST OVERLAY
-        </h1>,
-        overlayRoot
-      )}
+            createPortal(
+            <h1
+              style={{
+                position: "fixed",
+                top: "20px",
+                left: "20px",
+                zIndex: 2147483647,
+                color: "red",
+              }}
+            >
+              TEST OVERLAY
+            </h1>,
+            overlayRoot
+          )}
         </div>
   );
 }
